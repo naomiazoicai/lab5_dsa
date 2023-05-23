@@ -1,0 +1,3 @@
+C:/Users/naomi/CLionProjects/lab5_dsa/cmake-build-debug/CMakeFiles/lab5_dsa.dir
+C:/Users/naomi/CLionProjects/lab5_dsa/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/naomi/CLionProjects/lab5_dsa/cmake-build-debug/CMakeFiles/rebuild_cache.dir

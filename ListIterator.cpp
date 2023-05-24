@@ -1,94 +1,86 @@
-//#include "ListIterator.h"
-//#include "SortedIndexedList.h"
-//#include <iostream>
-//
-//using namespace std;
-//
-//ListIterator::ListIterator(const SortedIndexedList& list) : list(list) {
-//	currentIndex = 0;
-//}
-//
-//void ListIterator::first(){
-//	currentIndex = 0;
-//}
-//
-//void ListIterator::next(){
-//	if (!valid())
-//    {
-//        throw exception();
-//    }
-//    currentIndex++;
-//}
-//
-//bool ListIterator::valid() const{
-//	return currentIndex < list.size();
-//}
-//
-//TComp ListIterator::getCurrent() const{
-//    if (!valid())
-//    {
-//        throw exception();
-//    }
-//    return list.getElement(currentIndex);
-//}
-//
-//
 #include "ListIterator.h"
-#include "SortedIndexedList.h"
-#include "stack"
+#include <exception>
+#include <iostream>
 
-ListIterator::ListIterator(const SortedIndexedList& list) : list(list) {
-    stack<Node*> nodeStack;
-    currentNode = list.elements[list.root];
-    while (currentNode != nullptr) {
-        nodeStack.push(currentNode);
-        currentNode = list.elements[currentNode->left];
-    }
-    if (!nodeStack.empty()) {
-        currentNode = nodeStack.top();
-        nodeStack.pop();
-    }
-    this->nodeStack = nodeStack;
+using namespace std;
+
+ListIterator::ListIterator(const SortedIndexedList &list) : list(list) {
+    initStack();
+    first();
 }
-
 void ListIterator::first() {
-    stack<Node*> emptyStack;
-    swap(nodeStack, emptyStack);
-    currentNode = list.elements[list.root];
-    while (currentNode != nullptr) {
-        nodeStack.push(currentNode);
-        currentNode = list.elements[currentNode->left];
-    }
-    if (!nodeStack.empty()) {
-        currentNode = nodeStack.top();
-        nodeStack.pop();
+    initStack();
+    if (stackTop >= 0) {
+        currentIndex = stack[stackTop];
+    } else {
+        currentIndex = -1;
     }
 }
 
+//void ListIterator::next() {
+//    if (!valid()) {
+//        throw exception();
+//    }
+//    if (currentNode->right != -1) {
+//        currentNode = &list.elements[currentNode->right];
+//        while (currentNode->left != -1) {
+//            nodeStack.push(currentNode);
+//            currentNode = &list.elements[currentNode->left];
+//        }
+//    } else if (!nodeStack.empty()) {
+//        currentNode = nodeStack.top();
+//        nodeStack.pop();
+//    } else {
+//        currentNode = nullptr;
+//    }
+//}
 void ListIterator::next() {
-    if (!valid()) {
+    if (valid()) {
+        stackTop--;
+        if (valid())
+            currentIndex = stack[stackTop];
+        else
+            currentIndex = -1;
+    } else {
         throw exception();
     }
-    if (currentNode->right != -1) {
-        currentNode = list.elements[currentNode->right];
-        while (currentNode != nullptr) {
-            nodeStack.push(currentNode);
-            currentNode = list.elements[currentNode->left];
-        }
-    }
-    if (!nodeStack.empty()) {
-        currentNode = nodeStack.top();
-        nodeStack.pop();
+}
+
+TComp ListIterator::getCurrent() const{
+    if (valid()) {
+        return list.elements[currentIndex].element;
+    } else {
+        throw std::exception();
     }
 }
 
 bool ListIterator::valid() const {
-    return currentNode != nullptr;
+    return currentIndex != -1 && currentIndex < list.sizeBST;
 }
 
-TComp ListIterator::getCurrent() const {
-    if (!valid()) {
-        throw exception();
+
+
+
+//ListIterator::~ListIterator() = default;
+
+void ListIterator::initStack() {
+    stackSize = list.sizeBST;
+    stack = new int[stackSize];
+    stackTop = -1;
+    if (list.root != -1) {
+        inOrderToStack(list.root);
+    }}
+
+void ListIterator::inOrderToStack(int nodeIndex) {
+    if (nodeIndex == -1) {
+        return;
     }
-    return currentNode->element;
+
+    inOrderToStack(list.elements[nodeIndex].left);
+
+    stackTop++;
+    stack[stackTop] = nodeIndex;
+
+    inOrderToStack(list.elements[nodeIndex].right);
 }
+

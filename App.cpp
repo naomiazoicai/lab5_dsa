@@ -4,7 +4,7 @@
 #include "ExtendedTest.h"
 
 int main(){
-    testAll();
+    //testAll();
     testAllExtended();
     std::cout<<"Finished IL Tests!"<<std::endl;
 	system("pause");

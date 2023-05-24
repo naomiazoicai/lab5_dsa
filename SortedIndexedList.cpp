@@ -130,27 +130,45 @@ TComp SortedIndexedList::remove(int i) {
 
 
 ///searches for an element and returns the first position where the element appears or -1 if the element is not in the list
+//int SortedIndexedList::search(TComp e) const {
+//	int currentNode = root;
+//    int position = 0;
+//
+//    while (currentNode != -1)
+//    {
+//        if (r(e, elements[currentNode].element))
+//        {
+//            currentNode = elements[currentNode].left;
+//        }
+//        else if (r(elements[currentNode].element, e))
+//        {
+//            position += (elements[currentNode].leftSubtreeSize + 1);
+//            currentNode = elements[currentNode].right;
+//        }
+//        else
+//        {
+//           position += + elements[currentNode].leftSubtreeSize;
+//           return position + 1;
+//        }
+//    }
+//    return -1;
+//}
 int SortedIndexedList::search(TComp e) const {
-	int currentNode = root;
+    int currentNode = root;
     int position = 0;
 
-    while (currentNode != -1)
-    {
-        if (r(e, elements[currentNode].element))
-        {
+    while (currentNode != -1) {
+        if (r(e, elements[currentNode].element)) {
             currentNode = elements[currentNode].left;
-        }
-        else if (r(elements[currentNode].element, e))
-        {
-            position += (elements[currentNode].leftSubtreeSize + 1);
+        } else if (r(elements[currentNode].element, e)) {
+            position += elements[currentNode].leftSubtreeSize + 1;
             currentNode = elements[currentNode].right;
-        }
-        else
-        {
-           position += + elements[currentNode].leftSubtreeSize;
-           return position+1;
+        } else {
+            position += elements[currentNode].leftSubtreeSize;
+            return position;
         }
     }
+
     return -1;
 }
 

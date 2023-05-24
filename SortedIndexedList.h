@@ -24,6 +24,8 @@ private:
     int capacity;
     int sizeBST;
     Relation r;
+
+    int firstFree;
 public:
 	// constructor
 	SortedIndexedList(Relation r);
@@ -59,4 +61,13 @@ public:
     void destroyTree(int node);
 
 
+    void freeNode(int node);
+
+    int get_parent(TComp e);
+
+    TComp successor(TComp e);
+
+    void decrease(int pos) const;
+
+    void decrease(int prevNode, int pos) const;
 };

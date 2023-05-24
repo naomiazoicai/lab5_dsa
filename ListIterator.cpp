@@ -5,16 +5,17 @@
 using namespace std;
 
 ListIterator::ListIterator(const SortedIndexedList &list) : list(list) {
-    initStack();
+//    initStack();
     first();
 }
 void ListIterator::first() {
-    initStack();
-    if (stackTop >= 0) {
-        currentIndex = stack[stackTop];
-    } else {
-        currentIndex = -1;
-    }
+//    initStack();
+//    if (stackTop >= 0) {
+//        currentIndex = stack[stackTop];
+//    } else {
+//        currentIndex = -1;
+//    }
+this->currentIndex = 0;
 }
 
 //void ListIterator::next() {
@@ -35,27 +36,38 @@ void ListIterator::first() {
 //    }
 //}
 void ListIterator::next() {
-    if (valid()) {
-        stackTop--;
-        if (valid())
-            currentIndex = stack[stackTop];
-        else
-            currentIndex = -1;
-    } else {
+//    if (valid()) {
+//        stackTop--;
+//        if (valid())
+//            currentIndex = stack[stackTop];
+//        else
+//            currentIndex = -1;
+//    } else {
+//        throw exception();
+//    }
+
+    if (!this->valid())
+    {
         throw exception();
     }
+    this->currentIndex++;
 }
 
 TComp ListIterator::getCurrent() const{
-    if (valid()) {
-        return list.elements[currentIndex].element;
-    } else {
-        throw std::exception();
+//    if (valid()) {
+//        return list.elements[currentIndex].element;
+//    } else {
+//        throw std::exception();
+//    }
+    if (!this->valid())
+    {
+        throw exception();
     }
+    return list.getElement(this->currentIndex);
 }
 
 bool ListIterator::valid() const {
-    return currentIndex != -1 && currentIndex < list.sizeBST;
+    return this->currentIndex != -1 && this->currentIndex < list.sizeBST;
 }
 
 

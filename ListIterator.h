@@ -2,29 +2,24 @@
 #include "SortedIndexedList.h"
 
 
-
 //DO NOT CHANGE THIS PART
 class ListIterator{
-	friend class SortedIndexedList;
+    friend class SortedIndexedList;
 private:
-	const SortedIndexedList& list;
-	ListIterator(const SortedIndexedList& list);
+    const SortedIndexedList& list;
+    ListIterator(const SortedIndexedList& list);
 
-	int currentIndex;
-    int* stack;
-    int stackTop;
+    /// InOrder iterator
+    Node* stack; /// stack of size equal to the number of nodes in the tree
     int stackSize;
-
-    void initStack();
-    void inOrderToStack(int nodeIndex);
+    TComp currentValue;
 
 public:
-	void first();
-	void next();
-	bool valid() const;
+    void first();
+    void next();
+    bool valid() const;
     TComp getCurrent() const;
 
-
+    //destructor
+    ~ListIterator() { delete[] stack; }
 };
-
-

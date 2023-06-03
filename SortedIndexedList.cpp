@@ -36,6 +36,8 @@ TComp SortedIndexedList::getElement(int i) const{
     if (i < 0 || i >= this->sizeBST)
         throw exception();
     int current = this->root;
+
+    //performing a search through the tree array using the leftSubtreeSize values to navigate to the desired position
     while (this->tree[current].leftSubtreeSize != i)
     {
         if (i < this->tree[current].leftSubtreeSize)
@@ -103,7 +105,7 @@ TComp SortedIndexedList::remove(int i) {
     return removedElement;
 }
 
-
+/// Theta(1)
 void SortedIndexedList::removeNode(int nodePos, int parentPos, int nodeChildPos)
 {
     if (nodePos == this->root)
@@ -115,7 +117,7 @@ void SortedIndexedList::removeNode(int nodePos, int parentPos, int nodeChildPos)
     this->tree[nodePos].leftPos = this->firstEmpty;
     this->firstEmpty = nodePos;
 }
-/// Theta(1)
+
 
 /// searches for an element and returns the first position where the element appears or -1 if the element is not in the list
 /// O(n) - n the length of tree

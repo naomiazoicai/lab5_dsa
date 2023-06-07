@@ -63,7 +63,7 @@ TComp SortedIndexedList::remove(int i) {
     if (i < 0 || i >= this->sizeBST)
         throw exception();
     int current = this->root;
-    int parent = -1; //keep track of the parent of the current node during traversal
+    int parent = -1; //keeping track of the parent of the current node during traversal
 
     //find the node to delete
     while (this->tree[current].leftSubtreeSize != i)

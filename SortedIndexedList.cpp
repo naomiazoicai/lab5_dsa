@@ -3,8 +3,12 @@
 using namespace std;
 #include <exception>
 
-/// constructor
-/// O(n)
+///complexity: total: Θ(n), worst case Θ(n), average case Θ(n), best case: Θ(n)
+///complexity: Θ(1) worst, average and best
+//what is the best, average and worst time complexity for this method?
+
+///constructor
+///complexity: Θ(1) worst, average and best
 SortedIndexedList::SortedIndexedList(Relation r) {
     this->rel = r;
     this->root = -1;
@@ -13,27 +17,27 @@ SortedIndexedList::SortedIndexedList(Relation r) {
     this->capacity = 8;
     this->tree = new Node[8];
 
-    // use the left array to create a singly linked list of empty positions
+    //use the left array to create a singly linked list of empty positions
     for (int i = 0; i < capacity - 1; i++)
         this->tree[i].leftPos = i + 1;
     this->tree[capacity - 1].leftPos = -1;
 }
 
-/// returns the size of the list
-/// Theta(1)
+///returns the size of the list
+///complexity: Θ(1) worst, average and best
 int SortedIndexedList::size() const {
     return this->sizeBST;
 }
 
 ///checks if the list is empty
-/// Theta(1)
+///complexity: Θ(1) worst, average and best
 bool SortedIndexedList::isEmpty() const {
     return this->sizeBST == 0;
 }
 
-/// returns an element from a position
+///returns an element from a position
 ///throws exception if the position is not valid
-/// O(n) - n the length of tree
+///complexity: total: O(n), worst case Θ(n), average case Θ(log n), best case: Θ(1)
 TComp SortedIndexedList::getElement(int i) const{
     if (i < 0 || i >= this->sizeBST)
         throw exception();
@@ -58,7 +62,7 @@ TComp SortedIndexedList::getElement(int i) const{
 ///removes an element from a given position
 ///returns the removed element
 ///throws an exception if the position is not valid
-/// O(n)
+///complexity: total: O(n), worst case Θ(n), average case Θ(log n), best case: Θ(1)
 TComp SortedIndexedList::remove(int i) {
     if (i < 0 || i >= this->sizeBST)
         throw exception();
@@ -88,29 +92,29 @@ TComp SortedIndexedList::remove(int i) {
     //the element which will be removed
     TComp removedElement = this->tree[current].element;
 
-    // Fall 1: the node has no descendant
+    //Fall 1: the node has no descendant
     if (this->tree[current].leftPos == -1 && this->tree[current].rightPos == -1)
     {
         this->removeNode(current, parent, -1);
     }
 
-    // Fall 2: the node has only one descendant on left
+    //Fall 2: the node has only one descendant on left
     else if (this->tree[current].rightPos == -1)
     {
         this->removeNode(current, parent, this->tree[current].leftPos);
     }
 
-    // Fall 3: the node has only one descendant on right
+    //Fall 3: the node has only one descendant on right
     else if (this->tree[current].leftPos == -1)
     {
         this->removeNode(current, parent, this->tree[current].rightPos);
     }
     else
-    // Fall 4: the node has 2 descendants
+    //Fall 4: the node has 2 descendants
     {
-        // find the minimum of the right subtree, move it to the node to be deleted, and delete the minimum
+        //find the minimum of the right subtree, move it to the node to be deleted, and delete the minimum
 
-        // find the minimum of the right subtree by traversing the left children of the right subtree until we reach the leftmost node
+        //find the minimum of the right subtree by traversing the left children of the right subtree until we reach the leftmost node
         int minPos = this->tree[current].rightPos, minParent = current;
         this->tree[minPos].leftSubtreeSize--;
         while (this->tree[minPos].leftPos != -1)
@@ -126,7 +130,7 @@ TComp SortedIndexedList::remove(int i) {
     return removedElement;
 }
 
-/// Theta(1)
+///complexity: Θ(1) worst, average and best
 void SortedIndexedList::removeNode(int nodePos, int parentPos, int nodeChildPos)
 {
     //nodePos = index of the node to be removed
@@ -149,16 +153,22 @@ void SortedIndexedList::removeNode(int nodePos, int parentPos, int nodeChildPos)
 }
 
 
-/// searches for an element and returns the first position where the element appears or -1 if the element is not in the list
-/// O(n) - n the length of tree
-int SortedIndexedList::search(TComp e) const {
+///searches for an element and returns the first position where the element appears or -1 if the element is not in the list
+///complexity: total: O(n), worst case Θ(n), average case Θ(log n), best case: Θ(1)
+int SortedIndexedList::search(TComp e) const
+{
+    //check if the list is empty
     if (this->root == -1) return -1;
-    int foundPosition = -1, listPosition = 0;
+
+    int foundPosition = -1;
+    int listPosition = 0;
     int current = this->root;
     while (current != -1)
     {
         if (this->tree[current].element == e)
-            foundPosition = listPosition + this->tree[current].leftSubtreeSize;
+            foundPosition = listPosition + this->tree[current].leftSubtreeSize; //position of the element in the overall list
+
+        //check if the element is in the left subtree or in the right subtree
         if (this->rel(e, tree[current].element))
             current = this->tree[current].leftPos;
         else
@@ -170,18 +180,20 @@ int SortedIndexedList::search(TComp e) const {
     return foundPosition;
 }
 
-/// adds an element in the sortedList (to the corresponding position)
-/// O(n)
+///adds an element in the sortedList (to the corresponding position)
+///complexity: total: O(n), worst case Θ(n), average case Θ(log n), best case: Θ(1)
 void SortedIndexedList::add(TComp e) {
     if (this->firstEmpty == -1)
         this->resizeTreeArray();
 
     int current = this->root, parent = -1;
 
-    // find where to insert the node
+    //find where to insert the node
     while (current != -1)
     {
         parent = current;
+
+        //check whether to add in the left subtree or in the right one
         if (this->rel(e, tree[current].element))
         {
             this->tree[current].leftSubtreeSize++;
@@ -193,43 +205,43 @@ void SortedIndexedList::add(TComp e) {
 
     int newPosition = this->firstEmpty;
 
-    // there was no node in the tree, so add the root
+    //there was no node in the tree, so add the root
     if (current == this->root)
         this->root = newPosition;
+    //determine the correct parent-child relationship for the new element
     else if (rel(e, tree[parent].element))
         this->tree[parent].leftPos = newPosition;
     else
         this->tree[parent].rightPos = newPosition;
 
-    // get new firstEmpty position
+    //get new firstEmpty position
     this->firstEmpty = this->tree[firstEmpty].leftPos;
 
     this->tree[newPosition].element = e;
     this->tree[newPosition].leftSubtreeSize = 0;
 
-    // new node does not have children
+    //new node does not have children
     this->tree[newPosition].leftPos = -1;
     this->tree[newPosition].rightPos = -1;
 
     this->sizeBST++;
 }
 
-/// Theta(1)
+///complexity: Θ(1) worst, average and best
 ListIterator SortedIndexedList::iterator(){
     return ListIterator(*this);
 }
 
 
 ///destructor
-/// Theta(1)
+///complexity: Θ(1) worst, average and best
 SortedIndexedList::~SortedIndexedList() {
     delete[] this->tree;
 }
 
-
+///complexity: Θ(n) worst, average and best
 void SortedIndexedList::resizeTreeArray()
 {
-
     Node* newTree = new Node[capacity * 2];
     for (int i = 0; i < capacity; i++)
         newTree[i] = this->tree[i];

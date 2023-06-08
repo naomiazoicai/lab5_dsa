@@ -3,9 +3,6 @@
 using namespace std;
 #include <exception>
 
-///complexity: total: Θ(n), worst case Θ(n), average case Θ(n), best case: Θ(n)
-///complexity: Θ(1) worst, average and best
-//what is the best, average and worst time complexity for this method?
 
 ///constructor
 ///complexity: Θ(1) worst, average and best
@@ -25,20 +22,23 @@ SortedIndexedList::SortedIndexedList(Relation r) {
 
 ///returns the size of the list
 ///complexity: Θ(1) worst, average and best
-int SortedIndexedList::size() const {
+int SortedIndexedList::size() const
+{
     return this->sizeBST;
 }
 
 ///checks if the list is empty
 ///complexity: Θ(1) worst, average and best
-bool SortedIndexedList::isEmpty() const {
+bool SortedIndexedList::isEmpty() const
+{
     return this->sizeBST == 0;
 }
 
 ///returns an element from a position
 ///throws exception if the position is not valid
 ///complexity: total: O(n), worst case Θ(n), average case Θ(log n), best case: Θ(1)
-TComp SortedIndexedList::getElement(int i) const{
+TComp SortedIndexedList::getElement(int i) const
+{
     if (i < 0 || i >= this->sizeBST)
         throw exception();
     int current = this->root;

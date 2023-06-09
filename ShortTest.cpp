@@ -35,3 +35,34 @@ void testAll(){
     assert(list.isEmpty());
 }
 
+void testEquality() {
+    SortedIndexedList list1(relation1);
+    SortedIndexedList list2(relation1);
+
+    list1.add(1);
+    list1.add(2);
+    list1.add(3);
+
+    list2.add(1);
+    list2.add(2);
+    list2.add(3);
+
+    assert(list1 == list2);
+    cout<<"bravo1"<<endl;
+
+    list2.remove(1);
+    assert(!(list1 == list2));
+    cout<<"bravo2"<<endl;
+
+    list2.add(4);
+    assert(!(list1 == list2));
+    cout<<"bravo3"<<endl;
+
+
+    SortedIndexedList list3(relation1);
+    list3.add(1);
+    list3.add(2);
+
+    assert(!(list1 == list3));
+    cout<<"bravo4"<<endl;
+}

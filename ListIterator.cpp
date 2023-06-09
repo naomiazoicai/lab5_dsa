@@ -17,7 +17,7 @@ ListIterator::ListIterator(const SortedIndexedList& list) : list(list)
     {
         //in-order traversal
         this->stack[stackSize++] = list.tree[current];  //pushing the nodes onto the stack array
-        current = list.tree[current].leftPos;   // iteratively going to the leftmost child of each node until reaching a leaf node
+        current = list.tree[current].leftPos;   //iteratively going to the leftmost child of each node until reaching a leaf node
     }
     if (this->stackSize)
         this->currentValue = stack[stackSize-1].element;    //top node of the stack, represents the first element in the sorted order

@@ -2,7 +2,7 @@
 #include "SortedIndexedList.h"
 using namespace std;
 #include <exception>
-
+//verificati daca doua liste sunt egale
 
 ///constructor
 ///complexity: Θ(1) worst, average and best
@@ -255,10 +255,56 @@ void SortedIndexedList::resizeTreeArray()
     this->capacity *= 2;
 }
 
-void SortedIndexedList::removeBetween(int start, int end) {
-    if(start < 0 || end < 0 || start > this->sizeBST || end > this->sizeBST)
-        throw exception();
+SortedIndexedList::SortedIndexedList(const SortedIndexedList& other)
+{
+    this->rel = other.rel;
+    this->root = -1;
+    this->sizeBST = 0;
+    this->firstEmpty = 0;
+    this->capacity = other.capacity;
+    this->tree = new Node[other.capacity];
 
-    for(int i = start; i < end; i++)
-        this->remove(i);
+    //copy the elements from the other list
+    for (int i = 0; i < other.sizeBST; i++)
+    {
+        this->add(other.getElement(i));
+    }
 }
+
+///complexity: total: O(n), worst case Θ(n), average case Θ(n), best case: Θ(1)
+bool SortedIndexedList::operator==(const SortedIndexedList& other) const
+{
+    if (this->size() != other.size())
+        return false;
+
+    for (int i = 0; i < this->size(); i++)
+    {
+        if (this->getElement(i) != other.getElement(i))
+            return false;
+    }
+
+    return true;
+}
+
+
+//preconditions:
+//"this" and "other" are valid instances
+//size of the objects is defined
+
+//postconditions:
+//the method returns true if the objects are equal (they have the same size and elements)
+//the method returns false if the objects are not equal (they have different size and elements)
+//the states of the objects remain unchanged, they are not modified
+
+
+
+//subalgorithm operator==(SortedIndexedList.other) is:
+//      if this.size != other.size
+//          return false
+//      end-if
+//      for int i = 0, i < size()
+//          if this.getElement(i) != other.getElement(i)
+//              return false
+//          end-if
+//      end-for
+// return true

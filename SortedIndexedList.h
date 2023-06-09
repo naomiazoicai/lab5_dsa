@@ -61,6 +61,10 @@ public:
 
     void removeBetween(int start, int end);
 
+    SortedIndexedList(const SortedIndexedList& other);
+
+    bool operator==(const SortedIndexedList& other) const;
+
     //destructor
     ~SortedIndexedList();
 };

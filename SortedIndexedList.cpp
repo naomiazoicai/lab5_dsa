@@ -262,4 +262,3 @@ void SortedIndexedList::removeBetween(int start, int end) {
     for(int i = start; i < end; i++)
         this->remove(i);
 }
-/// O(n)

@@ -42,7 +42,7 @@ void ListIterator::first()
 }
 
 ///the next element
-///complexity: total: Θ(n), worst case Θ(n), average case Θ(log n), best case: Θ(1)
+///complexity: total: O(n), worst case Θ(n), average case Θ(n), best case: Θ(1)
 void ListIterator::next()
 {
     if (!valid())
